@@ -9,6 +9,12 @@ package bg.devrealm.input
 	
 	public class InputPlayer extends Object
 	{
+        public var data:Array = [];
+        public var styles:InputCSSData = new InputCSSData();
+        public var pointSize:uint = 7;
+        public var display:* = new Shape();
+        public var graphics:Graphics = display.graphics;
+
 		public function InputPlayer(data:Array = null)
 		{
 			super();
@@ -17,15 +23,10 @@ package bg.devrealm.input
 			
 			initialize();
 		}
-		public var data:Array = [];
-		public var styles:InputCSSData = new InputCSSData();
-		public var pointSize:uint = 7;
-		public var display:* = new Shape();
-		public var graphics:Graphics = display.graphics;
-		
+
 		public function start():void
 		{
-			var dataItem:InputData;
+			var dataItem:Object;
 			
 			for each(dataItem in data)
 			{
@@ -45,10 +46,8 @@ package bg.devrealm.input
 			}
 		}
 		
-		public function draw(data:InputData, graphics:Graphics = null, clear:Boolean = false):void
+		public function draw(data:Object, graphics:Graphics = null, clear:Boolean = false):void
 		{
-			var event:* = data.event;
-			
 			if (!graphics)
 				graphics = this.graphics;
 			
@@ -58,11 +57,11 @@ package bg.devrealm.input
 			if (clear)
 				graphics.clear();
 			
-			graphics.beginFill(styles[event.type]);
-			graphics.drawCircle(event.stageX, event.stageY, pointSize / 2);
+			graphics.beginFill(styles[data.event]);
+			graphics.drawCircle(data.x, data.y, pointSize / 2);
 		}
 		
-		protected function handler(data:InputData):void
+		protected function handler(data:Object):void
 		{
 			draw(data, graphics);
 		}

@@ -24,5 +24,20 @@ package bg.devrealm.input.data
 		{
 			return "[InputData(event=" + this.event + ")]";
 		}
+
+		public function export():Object
+		{
+			var result =
+			{
+				event: event.type,
+
+				x: ( ('stageX' in event) ? event['stageX'] : -1 ),
+				y: ( ('stageY' in event) ? event['stageY'] : -1 ),
+
+				time : time
+			};
+
+			return result;
+		}
 	}
 }

@@ -13,24 +13,24 @@ package bg.devrealm.input
 				[
 					MouseEvent.CLICK,
 					
-					MouseEvent.DOUBLE_CLICK,
+					//MouseEvent.DOUBLE_CLICK,
 					
-					MouseEvent.MIDDLE_CLICK,
-					MouseEvent.MIDDLE_MOUSE_DOWN,
-					MouseEvent.MIDDLE_MOUSE_UP,
+					//MouseEvent.MIDDLE_CLICK,
+					//MouseEvent.MIDDLE_MOUSE_DOWN,
+					//MouseEvent.MIDDLE_MOUSE_UP,
 					
 					MouseEvent.MOUSE_DOWN,
-					MouseEvent.MOUSE_MOVE,
-					MouseEvent.MOUSE_OUT,
-					MouseEvent.MOUSE_OVER,
+					//MouseEvent.MOUSE_MOVE,
+					//MouseEvent.MOUSE_OUT,
+					//MouseEvent.MOUSE_OVER,
 					MouseEvent.MOUSE_UP,
 					
-					MouseEvent.RELEASE_OUTSIDE,
+					//MouseEvent.RELEASE_OUTSIDE,
 					
-					MouseEvent.RIGHT_CLICK,
-					MouseEvent.RIGHT_MOUSE_UP,
-					MouseEvent.ROLL_OUT,
-					MouseEvent.ROLL_OVER
+					//MouseEvent.RIGHT_CLICK,
+					//MouseEvent.RIGHT_MOUSE_UP,
+					//MouseEvent.ROLL_OUT,
+					//MouseEvent.ROLL_OVER
 				];
 		
 		public static const KEYBOARD_EVENTS:Array =
@@ -40,7 +40,7 @@ package bg.devrealm.input
 				];
 		
 		public static const EVENT_TYPES:Array = [].concat(MOUSE_EVENTS).concat(KEYBOARD_EVENTS);
-		
+
 		public static var stage:Stage;
 		public static var instance:InputLogger;
 		
@@ -77,6 +77,26 @@ package bg.devrealm.input
 			
 			this.stage = null;
 		}
+
+		public function export():Array
+		{
+			var data:InputData;
+			var dataExport:Array = [];
+
+			for each(data in this.data)
+			{
+                dataExport.push( data.export() );
+			}
+
+			return dataExport;
+		}
+
+        protected function handler(event:Event):void
+        {
+            var item:InputData = new InputData(event)
+
+            this.data.push(item);
+        }
 		
 		private function addListeners():void
 		{
@@ -96,13 +116,6 @@ package bg.devrealm.input
 			{
 				this.stage.removeEventListener(type, handler, true);
 			}
-		}
-		
-		protected function handler(event:Event):void
-		{
-			var item:InputData = new InputData(event)
-			
-			this.data.push(item);
 		}
 	}
 }
